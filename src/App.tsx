@@ -20,18 +20,15 @@ const firebaseConfig = {
 	measurementId: "G-VF5Q4EQWWM",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 function App() {
-	const [user, loading, error] = useAuthState(auth);
+	const [user] = useAuthState(auth);
 
 	return (
-		<div className="App">
-			<section>
-				{user ? <ChatRoom auth={auth} /> : <SignIn auth={auth} />}
-			</section>
+		<div className="App w-screen h-screen flex content-center justify-center">
+			{user ? <ChatRoom auth={auth} /> : <SignIn auth={auth} />}
 		</div>
 	);
 }

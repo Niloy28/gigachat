@@ -1,4 +1,6 @@
 import { Auth } from "firebase/auth";
+import "../index.css";
+import TopBar from "./TopBar";
 
 interface ChatRoomProps {
 	auth: Auth;
@@ -10,9 +12,8 @@ export default function ChatRoom(props: ChatRoomProps) {
 	};
 
 	return (
-		<div>
-			<h1>Hello</h1>
-			<button onClick={signOut}>Sign Out</button>
+		<div className="h-10/12 w-8/12 flex">
+			<TopBar onSignOut={signOut} />
 		</div>
 	);
 }
