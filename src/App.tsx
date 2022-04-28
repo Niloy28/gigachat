@@ -27,7 +27,7 @@ function App() {
 	const [user] = useAuthState(auth);
 
 	return (
-		<div className="App w-screen h-screen flex content-center justify-center">
+		<div className="App w-screen h-screen flex items-center content-center justify-center">
 			{user ? <ChatRoom auth={auth} /> : <SignIn auth={auth} />}
 		</div>
 	);
