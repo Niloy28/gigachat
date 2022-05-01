@@ -5,7 +5,6 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useCollectionData } from "react-firebase-hooks/firestore";
 
 import ChatRoom from "./components/ChatRoom";
 import SignIn from "./components/SignIn";
@@ -28,7 +27,7 @@ const db = getFirestore(app);
 
 function App() {
 	const [user] = useAuthState(auth);
-	const [recipient, setRecipient] = useState<string | null>("");
+	const [recipient, setRecipient] = useState("");
 
 	useEffect(() => {
 		if (user === null) {
@@ -40,7 +39,7 @@ function App() {
 		<div className="App w-screen h-screen flex items-center content-center justify-center">
 			{user ? (
 				recipient !== "" ? (
-					<ChatRoom auth={auth} db={db} user={user} />
+					<ChatRoom auth={auth} db={db} user={user} recipient={recipient} />
 				) : (
 					<RecipientSelector onSubmit={setRecipient} />
 				)

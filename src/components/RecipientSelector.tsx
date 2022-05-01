@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 
 interface RecipientSelectorProps {
-	onSubmit: (arg0: string | null) => void;
+	onSubmit: (arg0: string) => void;
 }
 
 export default function RecipientSelector(props: RecipientSelectorProps) {
