@@ -45,18 +45,18 @@ export default function ChatRoom(props: ChatRoomProps) {
 	};
 
 	const q = query(userRef, orderBy("timeStamp"));
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [msgs, loading, error, msgSnapshot] = useCollectionData(q);
 	console.log(error);
 
-	if (msgs) {
-		console.log(msgs[0].toString());
-	}
-
 	return (
-		<div className="grid grid-rows-[1fr_8.5fr_1fr] gap-2 w-5/12">
+		<div className="grid grid-rows-[1fr_8.5fr_1fr] gap-1 w-5/12">
 			<TopBar onSignOut={signOut} />
 			{!loading ? (
-				<Inbox msgSnapshot={msgSnapshot as QuerySnapshot<DocumentData>} />
+				<Inbox
+					msgSnapshot={msgSnapshot as QuerySnapshot<DocumentData>}
+					senderEmail={props.user.email as string}
+				/>
 			) : (
 				<TopBar onSignOut={signOut} />
 			)}

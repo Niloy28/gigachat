@@ -6,7 +6,7 @@ interface MessageBoxProps {
 
 export default function MessageBox(props: MessageBoxProps) {
 	const [message, setMessage] = useState("");
-	const inputRef = useRef<HTMLInputElement>(null);
+	const inputRef = useRef<HTMLTextAreaElement>(null);
 
 	function sendMessage(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
@@ -17,7 +17,7 @@ export default function MessageBox(props: MessageBoxProps) {
 		}
 	}
 
-	function handleMessageTextChange(e: React.ChangeEvent<HTMLInputElement>) {
+	function handleMessageTextChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
 		setMessage(e.target.value);
 	}
 
@@ -27,9 +27,13 @@ export default function MessageBox(props: MessageBoxProps) {
 				onSubmit={sendMessage}
 				className="px-9 py-3 flex flex-[2_1_0%] justify-around"
 			>
-				<input
+				<textarea
+					rows={2}
+					cols={40}
+					required
+					autoComplete="off"
 					ref={inputRef}
-					type="text"
+					className="break-words resize-none"
 					id="message-input"
 					placeholder="Enter Message"
 					onChange={handleMessageTextChange}
