@@ -15,7 +15,7 @@ export default function Inbox(props: InboxProps) {
 	}, [props.msgSnapshot, dummyScrollTargetRef]);
 
 	return (
-		<div className="bg-blue-800 px-1 py-1 rounded-lg text-white text-lg h-[80vh] overflow-y-scroll">
+		<div className="bg-blue-800 px-1 py-1 rounded-lg text-white text-lg h-[80vh] overflow-y-auto scrollbar-thin scrollbar-thumb-purple-700 scrollbar-track-purple-300">
 			<ul className="flex flex-col justify-start w-12/12">
 				{props.msgSnapshot.docs.map((msg) => {
 					let isSent: boolean = false;

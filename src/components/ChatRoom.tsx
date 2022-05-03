@@ -9,6 +9,7 @@ import {
 } from "firebase/firestore";
 import { addDoc, collection } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import { Watch } from "react-loader-spinner";
 import "../index.css";
 import Inbox from "./Inbox";
 import MessageBox from "./MessageBox";
@@ -19,6 +20,7 @@ interface ChatRoomProps {
 	db: Firestore;
 	user: User;
 	recipient: string;
+	displayName: string;
 }
 
 export default function ChatRoom(props: ChatRoomProps) {
@@ -51,14 +53,21 @@ export default function ChatRoom(props: ChatRoomProps) {
 
 	return (
 		<div className="grid grid-rows-[1fr_8.5fr_1fr] gap-1 w-5/12">
-			<TopBar onSignOut={signOut} />
+			<TopBar
+				displayName={
+					props.displayName === "" ? recipientName : props.displayName
+				}
+				onSignOut={signOut}
+			/>
 			{!loading ? (
 				<Inbox
 					msgSnapshot={msgSnapshot as QuerySnapshot<DocumentData>}
 					senderEmail={props.user.email as string}
 				/>
 			) : (
-				<TopBar onSignOut={signOut} />
+				<div className="flex items-center justify-center">
+					<Watch color="blue" height={100} width={100} />
+				</div>
 			)}
 			<MessageBox onSubmit={sendMessage} />
 		</div>

@@ -28,6 +28,7 @@ const db = getFirestore(app);
 function App() {
 	const [user] = useAuthState(auth);
 	const [recipient, setRecipient] = useState("");
+	const [displayName, setDisplayName] = useState("");
 
 	useEffect(() => {
 		if (user === null) {
@@ -39,9 +40,18 @@ function App() {
 		<div className="App w-screen h-screen flex items-center content-center justify-center">
 			{user ? (
 				recipient !== "" ? (
-					<ChatRoom auth={auth} db={db} user={user} recipient={recipient} />
+					<ChatRoom
+						auth={auth}
+						db={db}
+						user={user}
+						recipient={recipient}
+						displayName={displayName}
+					/>
 				) : (
-					<RecipientSelector onSubmit={setRecipient} />
+					<RecipientSelector
+						onRecipientSubmit={setRecipient}
+						onDisplayNameSubmit={setDisplayName}
+					/>
 				)
 			) : (
 				<SignIn auth={auth} />
