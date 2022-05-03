@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { KeyboardEvent, useRef, useState } from "react";
 
 interface MessageBoxProps {
 	onSubmit: (arg0: string) => void;
@@ -7,6 +7,7 @@ interface MessageBoxProps {
 export default function MessageBox(props: MessageBoxProps) {
 	const [message, setMessage] = useState("");
 	const inputRef = useRef<HTMLTextAreaElement>(null);
+	const formRef = useRef<HTMLFormElement>(null);
 
 	function sendMessage(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
@@ -21,9 +22,17 @@ export default function MessageBox(props: MessageBoxProps) {
 		setMessage(e.target.value);
 	}
 
+	function submitMessageToForm(e: KeyboardEvent) {
+		if (e.key === "Enter" && e.ctrlKey) {
+			e.preventDefault();
+			formRef.current?.requestSubmit();
+		}
+	}
+
 	return (
 		<div className="flex content-center justify-around px-8 bg-blue-400 rounded-lg">
 			<form
+				ref={formRef}
 				onSubmit={sendMessage}
 				className="px-9 py-3 flex flex-[2_1_0%] justify-around"
 			>
@@ -35,8 +44,9 @@ export default function MessageBox(props: MessageBoxProps) {
 					ref={inputRef}
 					className="break-words resize-none"
 					id="message-input"
-					placeholder="Enter Message"
+					placeholder="Enter Message (Ctrl+Enter to send)"
 					onChange={handleMessageTextChange}
+					onKeyDown={submitMessageToForm}
 					value={message}
 				/>
 				<button

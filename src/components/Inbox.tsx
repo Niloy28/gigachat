@@ -1,4 +1,5 @@
 import { QuerySnapshot } from "firebase/firestore";
+import { useEffect, useRef } from "react";
 import MessageDisplay from "./MessageDisplay";
 
 interface InboxProps {
@@ -7,8 +8,14 @@ interface InboxProps {
 }
 
 export default function Inbox(props: InboxProps) {
+	const dummyScrollTargetRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		dummyScrollTargetRef.current?.scrollIntoView({ behavior: "smooth" });
+	}, [props.msgSnapshot, dummyScrollTargetRef]);
+
 	return (
-		<div className="bg-blue-800 px-1 py-1 rounded-lg text-white text-lg">
+		<div className="bg-blue-800 px-1 py-1 rounded-lg text-white text-lg h-[80vh] overflow-y-scroll">
 			<ul className="flex flex-col justify-start w-12/12">
 				{props.msgSnapshot.docs.map((msg) => {
 					let isSent: boolean = false;
@@ -30,6 +37,7 @@ export default function Inbox(props: InboxProps) {
 					);
 				})}
 			</ul>
+			<div ref={dummyScrollTargetRef}></div>
 		</div>
 	);
 }
